@@ -23,13 +23,14 @@ docker network create traefik
 ```
 ### Copy env.sample to .env
 ```
-cp .env.sample .env
+cp env.sample .env
 ```
 
 ### Copy acme.json.tpl to acme.json
 You will not need to add or edit this file unless you have generated the contents manually which is not covered by this project.  Prior to installation the file will contain an empty json body: ```{}```
 ```
 cp config/traefik/tpl/acme.json.tpl config/traefik/acme.json
+chmod 600 config/traefik/acme.json
 ```
 
 ### config/traefik/tpl/compose.override.yml.tpl
@@ -42,7 +43,7 @@ By changing settings in this file, or if needed adding additional environment va
 The best way to understand how to support authorization is to read the Traefik documentation and refer to the [LEGO library](https://go-acme.github.io/lego/dns/index.html) documentation.
 
 ```
-config/traefik/tpl/compose.override.yml.tpl compose.override.yml
+cp config/traefik/tpl/compose.override.yml.tpl compose.override.yml
 ```
 ### Customize variables and Settings
 - Edit the .env and add required values.
