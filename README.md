@@ -36,7 +36,7 @@ chmod 600 config/traefik/acme.json
 ### config/traefik/tpl/compose.override.yml.tpl
 This file is designed to allow configuration of different DNS Providers using the dnsChallenge method.
 
-DNS Challenges are the most flexible way to generate 
+DNS Challenges are the most flexible way to generate certificates (including wildcard certs) using LetsEncrypt, and is supported by most DNS providers. 
 
 By changing settings in this file, or if needed adding additional environment variables to the .env file, other DNS providers can be supported without requiring changes to the docker-compose.yml or template files.
 
@@ -76,12 +76,20 @@ Anytime you make changes to your .env file values, make sure to run the make_tpl
 Those files are read as is, when the container is started, and environment variables will not be parsed.
 
 ### Notes on .env Settings
-The .env file should be self documenting. An important concept is that traefik includes an administration console which requires its own hostname that is separate from the ez-wireguard admin system. To secure the admin console, you utilize the ADMIN_USER_AUTH= variable.  The contents of this variable should be generated using the htpasswd program that is part of the apache web server. It is strongly recommended that you generate admin users using the bcrypt format.  
+The .env file should be self documenting. An important concept is that traefik includes an administration console which requires its own hostname that is separate from the ez-wireguard admin system. To secure the admin console, you utilize the ADMIN_USER_AUTH= variable.  
+
+The contents of this variable should be generated using the htpasswd program that is part of the apache web server. It is strongly recommended that you generate admin users using the bcrypt format, as illustrated.
 
 This is an example that generates a password for a user named 'admin'.  You will be prompted to enter the password twice.
 
 ```
 htpasswd -nB admin
+```
+
+If you do not have an Apache installation you can utilize this docker run command (substitute your desired traefik admin user for {traefik admin username}):
+
+```
+docker run -it --entrypoint htpasswd httpd:2 -nB {traefik admin username}
 ```
 The hash provided should be copied into the .env file and enclosed in single quotes.  You must use _single quotes_ or the $ signs in the password will confuse the template process.
 
