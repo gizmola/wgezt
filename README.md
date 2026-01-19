@@ -91,7 +91,7 @@ If you do not have an Apache installation you can utilize this docker run comman
 ```
 docker run -it --entrypoint htpasswd httpd:2 -nB {traefik admin username}
 ```
-The hash provided should be copied into the .env file and enclosed in single quotes.  You must use _single quotes_ or the $ signs in the password will confuse the template process.
+The output returned by htpasswd should be copied into the .env file and enclosed in single quotes.  You must use _single quotes_ or the $ signs in the password will confuse the template process.
 
 *Example: Variable set in the .env file.*
 ```
