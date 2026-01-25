@@ -89,7 +89,7 @@ htpasswd -nB admin
 If you do not have an Apache installation you can utilize this docker run command (substitute your desired traefik admin user for {traefik admin username}):
 
 ```
-docker run -it --entrypoint htpasswd httpd:2 -nB {traefik admin username}
+docker run --rm -it --entrypoint htpasswd httpd:2 -nB {traefik admin username}
 ```
 The output returned by htpasswd should be copied into the .env file and enclosed in single quotes.  You must use _single quotes_ or the $ signs in the password will confuse the template process.
 
